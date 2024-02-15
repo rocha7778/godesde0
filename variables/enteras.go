@@ -3,6 +3,7 @@ package variables
 import "fmt"
 
 func MuestroEnteros() {
+
 	var intcomun int
 	intde32 := int32(30)
 	intde64 := int64(30)
