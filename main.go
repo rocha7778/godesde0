@@ -2,51 +2,37 @@ package main
 
 import (
 	"fmt"
-	"runtime"
 
-	"github.com/rocha7778/godesde0/ejercicios"
-	"github.com/rocha7778/godesde0/funciones"
-	"github.com/rocha7778/godesde0/mapas"
-	"github.com/rocha7778/godesde0/users"
-	"github.com/rocha7778/godesde0/variables"
+	"github.com/rocha7778/poo/apuntadores"
+	"github.com/rocha7778/poo/interfaces"
+	"github.com/rocha7778/poo/users"
 )
 
 func main() {
-	variables.MuestroEnteros()
-	variables.RestoVariables()
-	estado, texto := variables.ConvierteATexto(1588)
 
-	fmt.Println(estado)
-	fmt.Println(texto)
+	square := &interfaces.Square{Width: 5, Height: 5}
+	triangulo := &interfaces.Trinagulo{Base: 4, Altura: 3}
 
-	os := runtime.GOOS
+	formas := []interfaces.CalculaArea{square, triangulo}
 
-	if os == "windows" {
-		fmt.Println("Windows")
-	} else {
-		fmt.Println("Linux")
+	// Iterar sobre el array y imprimir el área de cada forma
+	for _, forma := range formas {
+		area := forma.GetArea()
+		nombre := forma.MuestraNombre()
+		fmt.Printf("Área del %s: es %.2f\n", nombre, area)
 	}
 
-	switch os := runtime.GOOS; os {
+	muestraArea(square)
+	muestraArea(triangulo)
+	fmt.Println("")
 
-	case "windows":
-		fmt.Println("Windows")
-	case "Linux":
-		fmt.Println("Linux")
-	default:
-		fmt.Println("Other")
+	u := users.AltaUsuarioPorHora()
 
-	}
+	fmt.Println(u.IsPaidByhour)
+	apuntadores.Apuntadores()
 
-	fmt.Println(ejercicios.ConversorNumeric("100"))
-	fmt.Println(ejercicios.ConversorNumeric("300"))
-	fmt.Println(ejercicios.ConversorNumeric("30a"))
-	ejercicios.TablaMultiplicar(10)
-	funciones.Calculos()
-	funciones.LlamarClosure()
-	funciones.Exponencial(1)
-	mapas.MostrarMapas()
-	fmt.Println(users.AltaUsuario())
-	fmt.Println(users.AltaUsuarioConstructor("Rocha", 10, "eldios_delcielo@yahoo.com", "73216154", true))
+}
 
+func muestraArea(forma interfaces.CalculaArea) {
+	fmt.Printf("Área del %s: es %.2f\n", forma.MuestraNombre(), forma.GetArea())
 }
